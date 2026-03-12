@@ -1,0 +1,8 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "xray run -config /etc/xray/config.json"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3

@@ -1,0 +1,68 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "port": 8080,
+      "protocol": "vless",
+      "tag": "vless-ws-in",
+      "settings": {
+        "clients": [
+          {
+            "id": "65c1882d-bb15-4374-9052-6cd7fbd0f2f5",
+            "level": 0
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "wsSettings": {
+          "path": "/vless",
+          "headers": {}
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      }
+    },
+    {
+      "port": 8388,
+      "protocol": "shadowsocks",
+      "tag": "ss-in",
+      "settings": {
+        "method": "chacha20-ietf-poly1305",
+        "password": "YOUR_SS_PASSWORD",
+        "network": "tcp,udp"
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "ip": ["geoip:private"],
+        "outboundTag": "blocked"
+      },
+      {
+        "type": "field",
+        "domain": ["geosite:category-ads-all"],
+        "outboundTag": "blocked"
+      }
+    ]
+  }
+}

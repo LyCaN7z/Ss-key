@@ -1,0 +1,11 @@
+FROM teddysun/xray:latest
+
+# Copy config
+COPY config.json /etc/xray/config.json
+
+# Expose ports
+EXPOSE 8080
+EXPOSE 8388
+
+# Start Xray
+CMD ["xray", "run", "-config", "/etc/xray/config.json"]
